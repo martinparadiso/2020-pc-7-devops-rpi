@@ -202,11 +202,6 @@ class Container():
         # If the state is running, re-check, in case the container crashed
         return self.state.value
 
-    def version(self):
-        """Get the version running
-        """
-        return self.tag
-
     def force_update(self):
         """Force an update check
         """

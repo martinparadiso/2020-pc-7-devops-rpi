@@ -1,0 +1,52 @@
+{% extends "dashboard/base.html" %}
+
+{% block content %}
+
+<div class="container">
+
+    <ul class="nav d-flex justify-content-between align-items-center my-4">
+        <li class="nav-item">
+            <h1 class="display-4">Device: {{ device.name }}</h1>
+        </li>
+        <li class="nav-item">
+            <ul class="nav">
+                <li class="nav-item mr-1">
+                    <a class="btn btn-primary" href="{% url 'dashboard:detail' device.id %}?refresh=true" role="button">Refresh</a>
+                </li>
+                <li class="nav-item mr-1">
+                    <a class="btn btn-info" href="{% url 'dashboard:change_version' device.id %}" role="button">Change version</a>
+                </li>
+                <li class="nav-item">
+                    <a class="btn btn-light" href="{% url 'dashboard:edit' device.id %}" role="button">Edit</a>
+                </li>
+            </ul>
+        </li>
+    </ul>
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif%}" role="alert">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <div class="table-responsive">
+        <table class="table table-bordered">
+        <tbody>
+            <tr><th scope="row" width="15%">Name</th><td>{{ device.name }}</td></tr>
+            <tr><th scope="row" width="15%">IP</th><td>{{ device.ip }}</td></tr>
+            <tr><th scope="row" width="15%">Added</th><td>{{ device.date_added }}</td></tr>
+            <tr><th scope="row" width="15%">Last check</th><td>{{ device.get_last_check }}</td></tr>
+            <tr><th scope="row" width="15%">Last status</th><td>{{ device.get_last_status }}</td></tr>
+            <tr><th scope="row" width="15%">Image</th><td>{{ device.get_image }}</td></tr>
+            <tr><th scope="row" width="15%">Tag</th><td>{{ device.get_tag }}</td></tr>
+        </tbody>
+        </table>
+    </div>
+
+
+    {% comment %} Actions {% endcomment %}
+</div>
+
+{% endblock %}

@@ -2,7 +2,6 @@
 
 from flask import Flask, request, jsonify   # flask for the server
 from multiprocessing import Lock            # Lock for concurrent requests
-import time                                 # HACK time.sleep for testing concurrency
 import container
 import os
 
@@ -12,7 +11,7 @@ app = Flask(__name__)
 
 container = container.Container()
 
-@app.route('/version', methods=['POST'])
+@app.route('/tag', methods=['POST'])
 def use():
     """
     Change the tag of the image used by this device
@@ -22,19 +21,26 @@ def use():
     container.switch_version(new_tag)
     return jsonify({"success" : True})
 
-@app.route('/version', methods=['GET'])
+@app.route('/tag', methods=['GET'])
 def version():
     """
     Get the version (tag) used by this device
     """
-    v = container.version()
-    return jsonify({ "version" : v })
+    t = container.tag
+    return jsonify({ "tag" : t })
 
 @app.route('/status')
 def status():
     stat = container.status()
     return jsonify({
         'status' : str(stat)
+    })
+
+@app.route('/image')
+def image():
+    img = container.image
+    return jsonify({
+        'image' : str(img)
     })
 
 if __name__ == '__main__':

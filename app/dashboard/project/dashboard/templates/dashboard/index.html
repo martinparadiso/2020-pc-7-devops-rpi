@@ -1,0 +1,35 @@
+{% extends "dashboard/base.html" %}
+
+{% block content %}
+
+<div class="container">
+
+    <h1 class="display-4 my-4">Devices</h1>
+
+    <table class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">IP</th>
+            <th scope="col">Last check</th>
+            <th scope="col">Last status</th>
+            <th scope="col">Image</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for device in devices %}
+        <tr>
+            <th scope="row">
+                <a href="{% url 'dashboard:detail' device.id %}">{{ device.name }}
+            </th>
+            <td>{{ device.ip }}</td>
+            <td>{{ device.get_last_check}}</td>
+            <td>{{ device.get_last_status }}</td>
+            <td>{{ device.get_image_name }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+    </table>
+</div>
+
+{% endblock %}
