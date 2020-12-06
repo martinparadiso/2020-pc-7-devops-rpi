@@ -3,7 +3,7 @@ from .models import *
 
 class dispositivoAdmin(admin.ModelAdmin):
 	search_fields = ['nombre']  #barra de busqueda
-	list_display = ('nombre', 'ip','get_status',)  #lista por nombre e ip
+	list_display = ('nombre', 'ip',)  #lista por nombre e ip
 
 
 
