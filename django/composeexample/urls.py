@@ -20,4 +20,5 @@ from sensor.views import version
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('version/', version),
+	
 ]
