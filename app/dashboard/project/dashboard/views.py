@@ -6,19 +6,79 @@ from django.contrib import messages
 from django.utils import timezone
 from django.core.exceptions import ValidationError
 from django.core.validators import validate_ipv46_address
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import authenticate, login, logout, get_user_model
 
 from .models import Device
 from .versions import get_versions
 
 import requests
 
+def login_view(request):
+    User = get_user_model()
+    users = User.objects.all()
+    if not users:
+        return redirect(reverse('dashboard:register'))
+
+    if request.user.is_authenticated:
+        return redirect(reverse('dashboard:index'))
+
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        next_url = request.POST['next']
+        user = authenticate(request, username=username, password=password)
+        
+        if user is not None:
+            login(request, user)
+            return redirect(reverse('dashboard:index'))
+        else:
+            messages.error(request, 'Wrong username and/or password', extra_tags='danger')
+            return redirect(f"/dashboard/login?next={next_url}")
+
+    return render(request, 'dashboard/login.html')
+
+def register_view(request):
+    User = get_user_model()
+    users = User.objects.all()
+    if not users:
+
+        if request.method == 'POST':
+            # Proceed to add the user
+            username = request.POST['username']
+            email = request.POST['email']
+            password = request.POST['password']
+            password2 = request.POST['reenter-password']
+
+            if password != password2:
+                messages.error(request, 'The passwords must match', extra_tags='danger')
+                return render(request, 'dashboard/register.html')
+            
+            user = User.objects.create_user(username, email, password)
+
+            messages.success(request, f'User {user.username} registered')
+            return redirect(reverse("dashboard:index"))
+    else:
+        return redirect(reverse("dashboard:index"))
+
+    return render(request, 'dashboard/register.html')
+
+@login_required
+def log_out(request):
+    logout(request)
+    messages.success(request, 'Goodbye!')
+    return redirect(reverse('dashboard:index'))
+
+@login_required
 def index(request):
+
     devices = Device.objects.all()
     context = {
         'devices' : devices
     }
     return render(request, 'dashboard/index.html', context)
 
+@login_required
 def detail(request, pk):
     device = get_object_or_404(Device, pk=pk)
     try:
@@ -46,6 +106,7 @@ def detail(request, pk):
         pass
     return render(request, 'dashboard/detail.html', { 'device' : device })
 
+@login_required
 def edit(request, pk):
     device = get_object_or_404(Device, pk=pk)
     
@@ -67,7 +128,7 @@ def edit(request, pk):
 
     return render(request, 'dashboard/edit.html', { 'device' : device })
 
-
+@login_required
 def change_version(request, pk):
     device = get_object_or_404(Device, pk=pk)
 
