@@ -16,8 +16,14 @@
                 <li class="nav-item mr-1">
                     <a class="btn btn-info" href="{% url 'dashboard:change_version' device.id %}" role="button">Change version</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item mr-1">
                     <a class="btn btn-light" href="{% url 'dashboard:edit' device.id %}" role="button">Edit</a>
+                </li>
+                <li class="nav-item">
+                    <form class="form-inline my-2 my-lg-0" action="{% url 'dashboard:remove' device.id %}" method="post">
+                    {% csrf_token %}
+                        <button class="btn btn-danger my-2 my-sm-0" type="submit">Remove</button>
+                    </form>
                 </li>
             </ul>
         </li>

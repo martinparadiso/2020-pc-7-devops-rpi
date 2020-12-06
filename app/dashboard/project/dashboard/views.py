@@ -107,6 +107,27 @@ def detail(request, pk):
     return render(request, 'dashboard/detail.html', { 'device' : device })
 
 @login_required
+def add(request):
+
+    # If the request is POST, add the devices
+    if request.method == 'POST':
+        try:
+            name = request.POST['name']
+            validate_ipv46_address(request.POST['ip'])
+            ip = request.POST['ip']
+
+            new_device = Device.objects.create(name=name,
+                                           ip=ip,
+                                           date_added=timezone.now())
+
+            return redirect(reverse('dashboard:detail', args=(new_device.id, )))
+
+        except ValidationError as e:
+            messages.error(request, e.message, extra_tags='danger')
+
+    return render(request, 'dashboard/add.html')
+
+@login_required
 def edit(request, pk):
     device = get_object_or_404(Device, pk=pk)
     
@@ -127,6 +148,18 @@ def edit(request, pk):
             messages.error(request, e.message, extra_tags='danger')
 
     return render(request, 'dashboard/edit.html', { 'device' : device })
+
+@login_required
+def remove(request, pk):
+    device = get_object_or_404(Device, pk=pk)
+    name = device.name
+    if request.method == 'POST':
+        device.delete()
+        messages.success(request, f"Device '{name}' removed")
+        return redirect(reverse('dashboard:index'))
+    else:
+        return redirect(reverse('dashboard:detail', args=(pk,)))
+
 
 @login_required
 def change_version(request, pk):

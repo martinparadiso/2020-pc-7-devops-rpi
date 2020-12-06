@@ -1,0 +1,39 @@
+{% extends "dashboard/base.html" %}
+
+{% block content %}
+
+<div class="container">
+
+    <ul class="nav d-flex justify-content-between align-items-center">
+        <li class="nav-item">
+            <h1 class="display-4 my-4">Add new device</h1>
+        </li>
+    </ul>
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif%}" role="alert">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <form action="{% url 'dashboard:add' %}" method="post">
+    {% csrf_token %}
+    <div class="form-group row">
+        <label for="name" class="col-sm-1 col-form-label">Name</label>
+        <input type="text" name="name" value="" class="col-sm-11">
+    </div>
+    <div class="form-group row">
+        <label for="ip" class="col-sm-1 col-form-label">IP</label>
+        <input type="text" name="ip" value="" class="col-sm-11">
+    </div>
+
+    <div class="row">
+        <a href="{% url 'dashboard:index' %}" class="btn btn-light col-sm-6">Cancel</a>
+        <button type="submit" class="btn btn-primary col-sm-6">Save</button>
+    </div>
+    </form>
+</div>
+
+{% endblock %}
