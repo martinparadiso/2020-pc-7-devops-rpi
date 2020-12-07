@@ -1,0 +1,25 @@
+# Example docker-compose for the manager
+version: "3.3"
+   
+services:
+
+    manager:
+        container_name: "manager"
+        build: .
+        environment:
+            # Access token, use something random and long
+            # For example:
+            # ACCESS_TOKEN=be5d3d6b7669c3e4e159d9ea5eb200cf
+            - ACCESS_TOKEN=
+            # Image to use
+            - CONTAINER_IMAGE=
+            # Optional
+            # - POLL_INTERVAL=5
+        volumes:
+            # Persistent data, configurations
+            - ./data:/app/data
+            # Access to the docker daemon
+            - /var/run/docker.sock:/var/run/docker.sock
+        ports:
+            # Exposed port for HTTP commands
+            - 1221:1221

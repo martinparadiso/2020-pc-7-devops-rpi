@@ -1,0 +1,14 @@
+version: "3.3"
+
+services:
+
+    dashboard:
+        container_name: dashboard
+        build: .
+        environment:
+            - TZ=America/Argentina/Buenos_Aires
+        volumes:
+            # Persistant information, such as database and secret key
+            - ./data:/app/data
+        ports:
+            - 80:80

@@ -10,19 +10,25 @@
         </li>
         <li class="nav-item">
             <ul class="nav">
-                <li class="nav-item mr-1">
-                    <a class="btn btn-primary" href="{% url 'dashboard:detail' device.id %}?refresh=true" role="button">Refresh</a>
+                <li class="nav-item mr-1 mb-1">
+                    <a class="btn btn-primary" href="{% url 'dashboard:detail' device.id %}?refresh=true" role="button">Check</a>
                 </li>
-                <li class="nav-item mr-1">
+                <li class="nav-item mr-1 mb-1">
                     <a class="btn btn-info" href="{% url 'dashboard:change_version' device.id %}" role="button">Change version</a>
                 </li>
-                <li class="nav-item mr-1">
+                <li class="nav-item mr-1 mb-1">
+                    <form class="form-inline  my-lg-0" action="{% url 'dashboard:force_update' device.id %}" method="post">
+                    {% csrf_token %}
+                        <button class="btn btn-info  my-sm-0" type="submit">Force update</button>
+                    </form>
+                </li>
+                <li class="nav-item mr-1  mb-1">
                     <a class="btn btn-light" href="{% url 'dashboard:edit' device.id %}" role="button">Edit</a>
                 </li>
-                <li class="nav-item">
-                    <form class="form-inline my-2 my-lg-0" action="{% url 'dashboard:remove' device.id %}" method="post">
+                <li class="nav-item mr-1 mb-1">
+                    <form class="form-inline  my-lg-0" action="{% url 'dashboard:remove' device.id %}" method="post">
                     {% csrf_token %}
-                        <button class="btn btn-danger my-2 my-sm-0" type="submit">Remove</button>
+                        <button class="btn btn-danger  my-sm-0" type="submit">Remove</button>
                     </form>
                 </li>
             </ul>
@@ -42,6 +48,7 @@
         <tbody>
             <tr><th scope="row" width="15%">Name</th><td>{{ device.name }}</td></tr>
             <tr><th scope="row" width="15%">IP</th><td>{{ device.ip }}</td></tr>
+            <tr><th scope="row" width="15%">Token</th><td>{{ device.token }}</td></tr>
             <tr><th scope="row" width="15%">Added</th><td>{{ device.date_added }}</td></tr>
             <tr><th scope="row" width="15%">Last check</th><td>{{ device.get_last_check }}</td></tr>
             <tr><th scope="row" width="15%">Last status</th><td>{{ device.get_last_status }}</td></tr>

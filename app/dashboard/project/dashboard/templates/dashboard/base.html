@@ -22,10 +22,10 @@
 
 
       {% if request.user.is_authenticated %}
-      <form class="form-inline my-2 my-lg-0" action="{% url 'dashboard:logout' %}" method="post">
+      <form class="form-inline my-lg-0" action="{% url 'dashboard:logout' %}" method="post">
       {% csrf_token %}
-        <label class="" >{{ request.user }}</label>
-        <button class="btn btn-grey my-2 my-sm-0" type="submit">Logout</button>
+        <label class="btn btn-grey" >{{ request.user }}</label>
+        <button class="btn btn-grey my-sm-0" type="submit">Logout</button>
       </form>
       {% endif %}
 </nav>

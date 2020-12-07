@@ -2,7 +2,6 @@
 
 from flask import Flask
 from flask import jsonify
-
 import sensors.temperature
 
 app = Flask(__name__)

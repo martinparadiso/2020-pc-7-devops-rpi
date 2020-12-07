@@ -3,12 +3,13 @@ from django.core.validators import validate_ipv46_address
 
 class Device(models.Model):
     name = models.CharField('name', max_length=100)
-    date_added = models.DateTimeField('date added')
-    last_check = models.DateTimeField('last check', null=True)
     ip = models.GenericIPAddressField('ip', validators=[validate_ipv46_address])
+    date_added = models.DateTimeField('date added')
+    last_check = models.DateTimeField('last check', null=True, blank=True)
+    last_status = models.CharField('last status', max_length=64, blank=True)
     image = models.CharField('image', max_length=100, blank=True)
     tag = models.CharField('tag', max_length=100, blank=True)
-    last_status = models.CharField('last status', max_length=50, blank=True)
+    token = models.CharField('token', max_length=50, blank=False, null=False)
 
     def __str__(self):
         return self.name

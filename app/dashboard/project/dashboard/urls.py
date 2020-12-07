@@ -16,6 +16,10 @@ urlpatterns = [
     path('<int:pk>/remove', views.remove, name='remove'),
     # ex: /dashboard/23/change_version/
     path('<int:pk>/change_version', views.change_version, name='change_version'),
+    # ex: /dashboard/23/force_update/
+    path('<int:pk>/force_update', views.force_update, name='force_update'),
+    # ex: /dashboard/new_version
+    path('new_version/<str:version>', views.new_version, name='new_version'),
     # ex: /dashboard/login
     path('login/', views.login_view, name='login'),
     # ex: /dashboard/logout

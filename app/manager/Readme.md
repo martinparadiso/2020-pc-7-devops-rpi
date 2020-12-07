@@ -12,6 +12,7 @@ ser suministrada al momento de ejecutar el contenedor.
 
 | Variable          | Obligatoria   | Descripción                                                       |
 | ----------------- | ------------- | ----------------------------------------------------------------- |
+| ACCESS_TOKEN      | Si            | Token utilizado como auth para poder hacer las peticiones         |
 | CONTAINER_IMAGE   | Si            | Imagen de Docker a utilizar en el dispositivo                     |
 | POLL_INTERVAL     | No            | Intervalo entre actualizaciones, en minutos. Por defecto es 30    |
 

@@ -206,7 +206,6 @@ class Container():
         """Force an update check
         """
         self.clock.set()
-        pass
 
     def switch_version(self, new_tag):
         """Change the version (tag) of the container
