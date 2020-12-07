@@ -1,12 +1,14 @@
 #!/usr/bin/python3
 from bs4 import BeautifulSoup
 import requests
+import os
 
 def get_versions():
 
-  image = 'temperature_reader'
+  user = os.environ['GH_USER']
+  image = os.environ['GH_IMAGE']
 
-  r = requests.get(f"https://github.com/users/martinparadiso/packages/container/{image}/versions")
+  r = requests.get(f"https://github.com/users/{user}/packages/container/{image}/versions")
   html = BeautifulSoup(r.text, 'html.parser')
 
   tags = html.find_all('a', class_='Label')

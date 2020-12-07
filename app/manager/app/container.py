@@ -58,7 +58,7 @@ class Container():
         self.thread = Thread(target=self.__state_loop)
         self.thread.start()
 
-    def __exit_callback(self):
+    def __exit_callback(self, signum, frame):
         """Mark the flag of stop, and wake up the state loop
         """
         self.stop = True

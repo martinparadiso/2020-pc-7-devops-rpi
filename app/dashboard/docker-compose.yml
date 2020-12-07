@@ -6,6 +6,10 @@ services:
         container_name: dashboard
         build: .
         environment:
+            # Github user where the image is stored
+            - GH_USER=
+            # Github image to monitor
+            - GH_IMAGE=
             - TZ=America/Argentina/Buenos_Aires
         volumes:
             # Persistant information, such as database and secret key
