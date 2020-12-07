@@ -54,4 +54,4 @@ jobs:
               continue-on-error: true
               uses: wei/curl@v1
               with:
-                args: http://{{ secrets.DASHBOARD_URL }}/new_version/${{ steps.extract_branch.outputs.branch }}
+                args: http://${{ secrets.DASHBOARD_URL }}/new_version/${{ steps.extract_branch.outputs.branch }}
