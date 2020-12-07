@@ -10,4 +10,4 @@ RUN apt-get -y update && \
 
 COPY . app/
 WORKDIR /app/
-CMD exec gunicorn -w 1 -b :1221 app:app
+CMD exec gunicorn -w 1 -b :5000 app:app
