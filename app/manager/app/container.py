@@ -42,7 +42,7 @@ class Container():
             with open('/app/data/tag') as tag_file:
                 self.tag = tag_file.readline().rstrip()
         except:
-            self.tag = 'latest'
+            self.tag = 'master'
 
         with open('/app/data/docker_config.json') as config_file:
             self.container_args = json.load(config_file)
@@ -96,7 +96,7 @@ class Container():
                 with docker_lock:
 
                     # The order of images is:
-                    # newly assigned -> previous -> 'latest'
+                    # newly assigned -> previous -> 'master'
 
                     # Try the new tag assigned
                     new_failed = True
@@ -119,13 +119,13 @@ class Container():
                             new_image = self.docker_iface.images.pull(
                                 self.image, tag=self.tag)
                         except:
-                            # If that fails too, try with latest
+                            # If that fails too, try with master
                             try:
                                 new_image = self.docker_iface.images.pull(
-                                    self.image, tag='latest')
+                                    self.image, tag='master')
                             
                             except:
-                                # If latest doesn't work, sleep and try again
+                                # If master doesn't work, sleep and try again
                                 self.clock.wait(
                                     timeout=self.polling_interval)
                                 self.clock.clear()
