@@ -19,4 +19,4 @@ c = 100
 
 def get_temperature():
     voltage = chan.voltage
-    return round(voltage * c, 2)
+    return round(voltage * c, 2) + 273
